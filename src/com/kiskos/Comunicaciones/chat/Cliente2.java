@@ -15,7 +15,7 @@ import static com.kiskos.Comunicaciones.chat.Chats.mostar;
  * En esta clase se crea al cliente y se le pasan parametros a la clase Chats inicializada y se ejecuta un hilo que
  * leera todo_ lo que nos envie el servidor
  */
-public class Cliente {
+public class Cliente2 {
     public static void main(String[] args){
         String[] puertoIp;
         String ipPuerto;
