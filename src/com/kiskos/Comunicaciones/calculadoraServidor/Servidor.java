@@ -6,7 +6,11 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+/**
+ *
+ * @author Braiskiskos
+ * @version 2022.3.17
+ */
 public class Servidor {
     private static float segundoNumero=0.0f,primerNumero=0.0f;
     //Primero tener el servidor iniciado para tener algo a lo que el cliente conectarse
@@ -31,7 +35,6 @@ public class Servidor {
             OutputStream os=newSocket.getOutputStream();
 
             byte[] mensaje=new byte[25];
-            String men="";
             String operador="";
             while(!new String(mensaje).equalsIgnoreCase("Fin")) {
                 int tamaño = is.read();
@@ -103,6 +106,12 @@ public class Servidor {
         }catch (IOException e) {
         }
     }
+
+    /**
+     * Metodo que sirve para quitar ceros inecesarios
+     * @param resultado recive un numero de tipo float
+     * @return Retorna el numero sin ceros inecesarios
+     */
     public static Float quitarCero(float resultado){
         String retorno="";
         retorno=Float.toString(resultado);

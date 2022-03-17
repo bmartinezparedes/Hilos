@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Braiskiskos
+ * @version 2022.3.17
  */
 public class Calculadora extends javax.swing.JFrame {
     
@@ -493,8 +494,7 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_bOFFActionPerformed
 
     private void bONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bONActionPerformed
-        // TODO add your handling code here:
-        
+
         System.out.println("Creando socket cliente");
         clienteSocket=new Socket();
         System.out.println("Estableciendo la conexion");
@@ -507,9 +507,6 @@ public class Calculadora extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        
     }//GEN-LAST:event_bONActionPerformed
 
     /**

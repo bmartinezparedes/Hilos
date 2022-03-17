@@ -7,9 +7,13 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
-
 import static com.kiskos.Comunicaciones.chat.Chats.is;
 import static com.kiskos.Comunicaciones.chat.Chats.mostar;
+/**
+ *
+ * @author Braiskiskos
+ * @version 2022.3.17
+ */
 
 /**
  * En esta clase se crea al cliente y se le pasan parametros a la clase Chats inicializada y se ejecuta un hilo que

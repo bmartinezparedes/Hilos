@@ -1,15 +1,21 @@
 package com.kiskos.Comunicaciones.chat;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * @author Braiskiskos
+ * @version 2022.3.17
+ */
 public class Servidor {
     //Primero tener el servidor iniciado para tener algo a lo que el cliente conectarse
     static int conexion=0; //Variable contador que indica cuantas personas hay conectadas y que usaremos para que solo se conecten 10
@@ -25,13 +31,13 @@ public class Servidor {
             ServerSocket serverSocket=new ServerSocket();
 
             System.out.println("Realizando el bind");
-
-            InetSocketAddress addr=new InetSocketAddress("localhost",6666);
+            int puerto = Integer.parseInt(JOptionPane.showInputDialog("Introduce puerto del servidor a alojar el chat"));
+            InetSocketAddress addr=new InetSocketAddress("localhost",puerto);
             serverSocket.bind(addr);
             new escribir().start();
             while(true) {
                 sleep(3000L);
-                while (conexion!=2) {
+                while (conexion!=10) {//pongo distinto de 10 para que solo como maximo haya 10 personas conectadas
                     conexion++;
                     new EjecutoHilo(serverSocket).start();
                 }
@@ -39,9 +45,7 @@ public class Servidor {
                     System.exit(0);
                 }
             }
-        }catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        }catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -52,6 +56,7 @@ public class Servidor {
     static class EjecutoHilo extends Thread{
         ServerSocket serverSocket;
         String nick;
+        Conexion cliente;
 
         /**
          * Hilo donde se creara la conexion del cliente y donde se tomaran datos para su posterior utilizacion en el servidor.
@@ -78,7 +83,8 @@ public class Servidor {
                 nick = new String(mensaje);
                 new Conectado(nick).start();
                 sleep(1000L);
-                sockets.add(new Conexion(newSocket,nick));
+                cliente=new Conexion(newSocket,nick);
+                sockets.add(cliente);
                 os.write("Te has conectado al server".length());
                 os.write("Te has conectado al server".getBytes());
                 serverUsado=true;
@@ -109,7 +115,23 @@ public class Servidor {
                 newSocket.close();
 
                 System.out.println("Fin hilo");
-            }catch (IOException | InterruptedException e) {
+            } catch (SocketException e) {
+                sockets.remove(cliente);
+                for(Conexion socket: sockets){
+                    OutputStream os;
+                    try {
+                        os = socket.getSocket().getOutputStream();
+                        String mensaje = nick+" se desconecto del server.";
+                        int tamaño = mensaje.length();
+                        os.write(tamaño);
+                        os.write(mensaje.getBytes());
+                        System.out.println("Mensaje enviado a todos: " + mensaje);
+                    } catch (IOException es) {
+                        es.printStackTrace();
+                    }
+                }
+                conexion--;
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -265,3 +287,4 @@ public class Servidor {
         }
     }
 }
+/*Diseñado y creado por Brais Martínez Paredes*/

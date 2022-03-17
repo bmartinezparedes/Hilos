@@ -8,14 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-
-import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.lang.Thread.sleep;
 
 /**
  *
  * @author Braiskiskos
- * @version 2022.0.0
+ * @version 2022.3.17
  */
 public class Chats extends javax.swing.JFrame {
     static InputStream is;
